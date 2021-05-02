@@ -1,0 +1,14 @@
+[Unit]
+Description=Create Host RSA keys if none exist
+After=network-online.target
+ConditionPathExists=!/etc/ssh/ssh_host_rsa_key
+
+[Service]
+Type=oneshot
+ExecStart=ssh-keygen -f /etc/ssh/ssh_host_rsa_key -N '' -t rsa
+TimeoutSec=20
+RemainAfterExit=yes
+StandardError=syslog
+
+[Install]
+WantedBy=sshd.service

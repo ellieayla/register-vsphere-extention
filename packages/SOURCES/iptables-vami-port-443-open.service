@@ -1,0 +1,14 @@
+[Unit]
+Description=Create Iptables rule to allow inbound traffic to port 443 VAMI
+After=iptables.service
+Requires=iptables.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/sbin/iptables -A INPUT -p tcp --dport 443 -j ACCEPT
+ExecStop=-/usr/sbin/iptables -D INPUT -p tcp --dport 443 -j ACCEPT
+TimeoutSec=0
+RemainAfterExit=yes
+
+[Install]
+WantedBy=iptables.service
